@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Token LabMGM, disalin dari DESIGN_SYSTEM.md dan globals.css website utama.
+   Latar halaman terang memakai #f7f7f5 seperti kode website, bukan putih. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --page: #f7f7f5;
+  --surface: #ffffff;
+  --sunken: #efefec;
+  --ink: #0e1116;
+  --ink-2: #3b4150;
+  --ink-3: #6b7280;
+  --line: #ececea;
+  --line-strong: #d8d8d2;
+
+  --blue: #3a6dc5;
+  --yellow: #f7bf33;
+  --red: #f94141;
+  --green: #0f8657;
+
+  --blue-50: #ecf1fa;
+  --yellow-50: #fef6e0;
+  --red-50: #fee5e5;
+  --green-50: #e2f1ea;
+
+  /* Warna teks untuk lencana: merah dan hijau pekat agar lolos kontras. */
+  --link: #3a6dc5;
+  --red-text: #b42323;
+  --green-text: #0b6d47;
+
+  --shadow-soft:
+    0 1px 2px rgba(14, 17, 22, 0.04), 0 1px 1px rgba(14, 17, 22, 0.03);
+  --shadow-lift:
+    0 6px 24px -8px rgba(14, 17, 22, 0.1), 0 2px 6px -2px rgba(14, 17, 22, 0.05);
+}
+
+.dark {
+  --page: #15181e;
+  --surface: #1c2028;
+  --sunken: #12151a;
+  --ink: #ededed;
+  --ink-2: #c4c9d4;
+  --ink-3: #9aa1ad;
+  --line: #262a33;
+  --line-strong: #343a46;
+
+  --blue-50: #1b2740;
+  --yellow-50: #3a3220;
+  --red-50: #3d2123;
+  --green-50: #16322a;
+
+  --link: #7ba2e6;
+  --red-text: #ff9a9a;
+  --green-text: #4cc99a;
+
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lift: 0 6px 24px -8px rgba(0, 0, 0, 0.5);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-blue: var(--blue);
+  --color-yellow: var(--yellow);
+  --color-red: var(--red);
+  --color-green: var(--green);
+  --color-blue-50: var(--blue-50);
+  --color-yellow-50: var(--yellow-50);
+  --color-red-50: var(--red-50);
+  --color-green-50: var(--green-50);
+  --color-link: var(--link);
+  --color-red-text: var(--red-text);
+  --color-green-text: var(--green-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-hanken);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-lift: var(--shadow-lift);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* Fokus keyboard selalu terlihat. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.dark :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: var(--link);
+}
+
+/* Angka rata di kolom dan nomor tiket. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  @page {
+    margin: 8mm;
+  }
+  .label-card {
+    break-inside: avoid;
+    border-color: #999 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
 }
